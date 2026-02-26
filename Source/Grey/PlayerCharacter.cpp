@@ -17,10 +17,10 @@ APlayerCharacter::APlayerCharacter()
     CameraBoom->SetRelativeLocation(FVector::ZeroVector);
     CameraBoom->SetRelativeRotation(FRotator(0.f, -90.f, 90.f));
     CameraBoom->bEnableCameraLag = true;
-    CameraBoom->CameraLagSpeed = 24.f;
-    CameraBoom->CameraLagMaxDistance = 10.f;
+    CameraBoom->CameraLagSpeed = 40.f;
+    CameraBoom->CameraLagMaxDistance = 7.f;
     CameraBoom->bEnableCameraRotationLag = true;
-    CameraBoom->CameraRotationLagSpeed = 24.f;
+    CameraBoom->CameraRotationLagSpeed = 40.f;
 
 
 
@@ -117,7 +117,7 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
     const FVector2D LookAxis = Value.Get<FVector2D>();
 
 
-    bool bIsLooking = LookAxis.SizeSquared() > 0.001f;
+    bool bIsLooking = LookAxis.SizeSquared() > 0.1f;
     if (bIsLooking) 
     {
         AddControllerYawInput(LookAxis.X);
