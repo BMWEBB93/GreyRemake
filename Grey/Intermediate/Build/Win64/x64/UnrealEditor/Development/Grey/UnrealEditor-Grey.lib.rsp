@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-Grey.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Users\bmw129\AppData\Local\Development\Grey\Grey\Intermediate\Build\Win64\x64\GreyEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"C:\Users\bmw129\AppData\Local\Development\Grey\Grey\Intermediate\Build\Win64\x64\UnrealEditor\Development\Grey\Grey.cpp.obj"
+"C:\Users\bmw129\AppData\Local\Development\Grey\Grey\Intermediate\Build\Win64\x64\UnrealEditor\Development\Grey\PerModuleInline.gen.cpp.obj"
+"C:\Users\bmw129\AppData\Local\Development\Grey\Grey\Intermediate\Build\Win64\x64\UnrealEditor\Development\Grey\Default.rc2.res"
+/OUT:"C:\Users\bmw129\AppData\Local\Development\Grey\Grey\Intermediate\Build\Win64\x64\UnrealEditor\Development\Grey\UnrealEditor-Grey.lib"

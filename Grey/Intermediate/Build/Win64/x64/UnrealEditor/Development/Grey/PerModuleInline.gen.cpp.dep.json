@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\bmw129\\appdata\\local\\development\\grey\\grey\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\grey\\permoduleinline.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\bmw129\\appdata\\local\\development\\grey\\grey\\intermediate\\build\\win64\\x64\\greyeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\bmw129\\appdata\\local\\development\\grey\\grey\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\grey\\definitions.grey.h",
+            "c:\\program files\\epic games\\ue_5.5\\engine\\source\\runtime\\core\\public\\hal\\permoduleinline.inl"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
