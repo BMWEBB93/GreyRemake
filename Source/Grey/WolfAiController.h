@@ -38,6 +38,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float DistanceToPlayer = 0.0f;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool bIsPlayerDetected = false;
 
 	UPROPERTY(transient)
 	class UBehaviorTreeComponent* BTC;

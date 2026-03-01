@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "WolfAiController.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 
-
+#include "Waypoint.h"
 #include "Wolf.h"
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
@@ -47,10 +48,11 @@ void AWolfAiController::BeginPlay()
 void AWolfAiController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
 	if (DistanceToPlayer > AISightRadius)
 	{
 		BBC->SetValue<UBlackboardKeyType_Bool>("HasLineOfSight", false);
-		BBC->ClearValue("TargetActor");
+		BBC->ClearValue("TargetActor");		
 	}
 }
 
@@ -79,11 +81,13 @@ FRotator AWolfAiController::GetControlRotation() const
 
 void AWolfAiController::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
 {
-	for (size_t i = 0; i < DetectedPawns.Num(); i++)
+	for (size_t i = 0; i < DetectedPawns.Num(); i++) 
+	{
 		if (DetectedPawns[i] == GetWorld()->GetFirstPlayerController()->GetPawn())
 		{
 			DistanceToPlayer = GetPawn()->GetDistanceTo(DetectedPawns[i]);
 			BBC->SetValue<UBlackboardKeyType_Bool>("HasLineOfSight", true);
 			BBC->SetValue<UBlackboardKeyType_Object>("TargetActor", DetectedPawns[i]);
 		}
+	}	
 }
