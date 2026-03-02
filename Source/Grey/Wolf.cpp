@@ -17,4 +17,16 @@ AWolf::AWolf()
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->RotationRate = FRotator(.0f, 600.f, .0f);
 
+	
+
 }
+
+void AWolf::BeginPlay()
+{
+	Super::BeginPlay();
+
+	
+}
+
+
+

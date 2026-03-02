@@ -21,14 +21,23 @@ bool UBTDecorator_hasLineOfSight::CalculateRawConditionValue(UBehaviorTreeCompon
 	//check if AIController or Blackboard exist in the AI Character
 	const UBlackboardComponent* MyBlackboard = OwnerComp.GetBlackboardComponent();
 	AAIController* MyController = OwnerComp.GetAIOwner();
-	if (!MyController || !MyBlackboard)
+	if (!MyController || !MyBlackboard) 
+	{
 		return false;
+	}
+
 	//check if the pawn of the AIController is an instance of AI character
 	AWolf* MyWolf = Cast<AWolf>(MyController->GetPawn());
-	if (!MyWolf)
+	if (!MyWolf) 
+	{
 		return false;
+	}
+
 	//Get main character detected, push forward for the Engage sequence
-	if (MyBlackboard->GetValueAsBool("HasLineOfSight"))
+	if (MyBlackboard->GetValueAsBool("bHasLineOfSight")) 
+	{
 		return true;
+	}
+
 	return false;
 }

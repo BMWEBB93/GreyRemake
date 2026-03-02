@@ -5,6 +5,7 @@
 
 #include "CoreMinimal.h"
 #include "BaseCharacter.h"
+#include "WolfPack.h"
 #include "Wolf.generated.h"
 
 /**
@@ -37,6 +38,12 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsAlpha = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AWolf* AlphaWolf = NULL;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AWolfPack* Pack = NULL;
 
 	// Movement variables
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")

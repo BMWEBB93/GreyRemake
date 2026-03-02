@@ -8,6 +8,16 @@
 
 #include "WolfPack.generated.h"
 
+
+UENUM(BlueprintType)
+enum class EPackState :uint8
+{
+	Idle        UMETA(DisplayName = "Idle"),
+	Patrolling  UMETA(DisplayName = "Patrolling"),
+	Hunting     UMETA(DisplayName = "Hunting"),
+	Attacking   UMETA(DisplayName = "Attacking")
+};
+
 class AWolf;
 UCLASS()
 class GREY_API AWolfPack : public AActor
@@ -23,6 +33,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AWolf* AlphaWolf;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	AWolf* FollowTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pack")
+	EPackState CurrentPackState;
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -30,5 +45,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	virtual void UpdateHierarchy();
+	AWolf* GetPatrolFollowTarget(AWolf* SelfWolf);
 
 };

@@ -9,6 +9,8 @@
 /**
  * 
  */
+
+class AWolf;
 UCLASS()
 class GREY_API AWolfAiController : public AAIController
 {
@@ -23,6 +25,9 @@ public:
 	virtual FRotator GetControlRotation() const override;
 	UFUNCTION()
 	void OnPawnDetected(const TArray<AActor*>& DetectedPawns);
+
+	void SetupPackData();
+
 
 	// AI perception variables
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
@@ -40,6 +45,8 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsPlayerDetected = false;
+
+	
 
 	UPROPERTY(transient)
 	class UBehaviorTreeComponent* BTC;

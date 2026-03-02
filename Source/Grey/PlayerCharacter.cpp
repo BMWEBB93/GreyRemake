@@ -17,10 +17,10 @@ APlayerCharacter::APlayerCharacter()
     CameraBoom->SetRelativeLocation(FVector::ZeroVector);
     CameraBoom->SetRelativeRotation(FRotator(0.f, -90.f, 90.f));
     CameraBoom->bEnableCameraLag = true;
-    CameraBoom->CameraLagSpeed = 40.f;
+    CameraBoom->CameraLagSpeed = 50.f;
     CameraBoom->CameraLagMaxDistance = 7.f;
     CameraBoom->bEnableCameraRotationLag = true;
-    CameraBoom->CameraRotationLagSpeed = 40.f;
+    CameraBoom->CameraRotationLagSpeed = 50.f;
 
 
 

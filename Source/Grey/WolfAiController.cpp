@@ -49,9 +49,11 @@ void AWolfAiController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+
+
 	if (DistanceToPlayer > AISightRadius)
 	{
-		BBC->SetValue<UBlackboardKeyType_Bool>("HasLineOfSight", false);
+		BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", false);
 		BBC->ClearValue("TargetActor");		
 	}
 }
@@ -86,8 +88,22 @@ void AWolfAiController::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
 		if (DetectedPawns[i] == GetWorld()->GetFirstPlayerController()->GetPawn())
 		{
 			DistanceToPlayer = GetPawn()->GetDistanceTo(DetectedPawns[i]);
-			BBC->SetValue<UBlackboardKeyType_Bool>("HasLineOfSight", true);
+			BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", true);
 			BBC->SetValue<UBlackboardKeyType_Object>("TargetActor", DetectedPawns[i]);
 		}
 	}	
+}
+
+void AWolfAiController::SetupPackData()
+{
+
+	AWolf* MyWolf = Cast<AWolf>(GetPawn());
+	if (!MyWolf) return;	
+
+	if (BBC)
+	{
+		BBC->SetValueAsObject("AlphaWolf", MyWolf->AlphaWolf);
+		BBC->SetValueAsBool("bIsAlpha", MyWolf->bIsAlpha);
+		BBC->SetValueAsInt("HierarchyRank", MyWolf->HierarchyRank);
+	}
 }

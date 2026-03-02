@@ -3,6 +3,7 @@
 
 #include "WolfPack.h"
 #include "Wolf.h"
+#include "WolfAiController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Algo/Sort.h"
 
@@ -31,6 +32,7 @@ void AWolfPack::BeginPlay()
 		if (AWolf* Wolf = Cast<AWolf>(Actor))
 		{
 			PackMembers.Add(Wolf);
+			Wolf->Pack = this;
 		}
 	}
 
@@ -44,18 +46,7 @@ void AWolfPack::BeginPlay()
 		}
 	}
 	
-	// sort wolves by size
-	PackMembers.Sort([](const AWolf& A, const AWolf& B)
-	{
-			return A.GetActorScale3D().X > B.GetActorScale3D().X;
-	});
-
-	AlphaWolf = PackMembers[0];
-	PackMembers[0]->bIsAlpha = true;
-	for (int32 i = 0; i < PackMembers.Num(); i++) 
-	{
-		PackMembers[i]->HierarchyRank = i;
-	}
+	GetWorldTimerManager().SetTimerForNextTick(this, &AWolfPack::UpdateHierarchy);
 
 }
 
@@ -64,5 +55,36 @@ void AWolfPack::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+}
+
+void AWolfPack::UpdateHierarchy()
+{
+	// sort wolves by size
+	PackMembers.Sort([](const AWolf& A, const AWolf& B)
+	{
+		return A.GetActorScale3D().X > B.GetActorScale3D().X;
+	});
+
+	AlphaWolf = PackMembers[0];
+	PackMembers[0]->bIsAlpha = true;
+	for (int32 i = 0; i < PackMembers.Num(); i++)
+	{
+		PackMembers[i]->AlphaWolf = PackMembers[0];
+		PackMembers[i]->HierarchyRank = i;
+
+		AWolfAiController* AI = Cast<AWolfAiController>(PackMembers[i]->GetController());
+		AI->SetupPackData();
+	}
+
+	FollowTarget = AlphaWolf;
+}
+
+AWolf* AWolfPack::GetPatrolFollowTarget(AWolf* SelfWolf)
+{
+	AWolf* Target = FollowTarget;
+
+	FollowTarget = SelfWolf;
+
+	return Target;
 }
 

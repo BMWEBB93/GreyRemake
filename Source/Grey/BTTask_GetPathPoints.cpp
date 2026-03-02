@@ -23,19 +23,25 @@ EBTNodeResult::Type UBTTask_GetPathPoints::ExecuteTask(UBehaviorTreeComponent& O
 	AAIController* WolfController = OwnerComp.GetAIOwner();
 
 	if (!WolfController || !MyBlackboard)
+	{
 		return EBTNodeResult::Failed;
+	}
 
 	//check if the pawn of the AIController is an instance of AI character
 	AWolf* myWolf = Cast<AWolf>(WolfController->GetPawn());
 
 	if (!myWolf)
+	{
 		return EBTNodeResult::Failed;
+	}
 
 	//Check if PatrolPath reference is valid and locations are populated
 	APatrolPath* PathRef = Cast<APatrolPath>(myWolf->PatrolPath);
 
 	if (!PathRef || PathRef->Locations.Num() < 1)
+	{
 		return EBTNodeResult::Succeeded;
+	}
 	
 
 	//Set the MoveToLocation Blackboard key to be the spline point
