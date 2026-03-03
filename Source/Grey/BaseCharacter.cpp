@@ -27,6 +27,15 @@ void ABaseCharacter::Tick(float DeltaTime)
 
 	speed = GetVelocity().Size2D();
 	bIsInAir = GetCharacterMovement()->IsFalling();
+
+	// get movement direction for animation
+	FVector Velocity = GetVelocity();
+	FVector Forward = GetActorForwardVector();
+
+	float ForwardDot = FVector::DotProduct(Forward, Velocity);
+	float RightDot = FVector::DotProduct(GetActorRightVector(), Velocity);
+
+	movementDirection = FMath::Atan2(RightDot, ForwardDot) * (180.f / PI);
 }
 
 void ABaseCharacter::TakeDamage(float DamageAmount)

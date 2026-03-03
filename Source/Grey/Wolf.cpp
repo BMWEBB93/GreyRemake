@@ -15,7 +15,10 @@ AWolf::AWolf()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->RotationRate = FRotator(.0f, 600.f, .0f);
+	GetCharacterMovement()->RotationRate = FRotator(.0f, 300.f, .0f);
+	GetCharacterMovement()->MaxAcceleration = 1000.f;
+	GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
+
 
 	
 

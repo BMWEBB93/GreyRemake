@@ -50,6 +50,6 @@ public:
 	float WalkSpeed = 300.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	float RunSpeed = 900.f;
+	float RunSpeed = 800.f;
 
 };

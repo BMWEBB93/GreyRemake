@@ -37,6 +37,9 @@ protected:
 	float speed;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Animation")
+	float movementDirection;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Animation")
 	bool bIsInAir;
 
 public:

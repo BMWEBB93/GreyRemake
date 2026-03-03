@@ -3,6 +3,7 @@
 
 #include "BTTask_GetPathPoints.h"
 
+#include "WolfPack.h"
 #include "AIController.h"
 #include "Components/SplineComponent.h"
 #include "Wolf.h"
@@ -36,7 +37,8 @@ EBTNodeResult::Type UBTTask_GetPathPoints::ExecuteTask(UBehaviorTreeComponent& O
 	}
 
 	//Check if PatrolPath reference is valid and locations are populated
-	APatrolPath* PathRef = Cast<APatrolPath>(myWolf->PatrolPath);
+	AWolfPack* WolfPack = Cast<AWolfPack>(myWolf->Pack);
+	APatrolPath* PathRef = Cast<APatrolPath>(WolfPack->PatrolPath);
 
 	if (!PathRef || PathRef->Locations.Num() < 1)
 	{

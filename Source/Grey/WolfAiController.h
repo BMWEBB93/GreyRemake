@@ -31,13 +31,13 @@ public:
 
 	// AI perception variables
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AISightRadius = 500.f;
+	float AISightRadius = 1500.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float AISightAge = 5.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float AILoseSightRadius = AISightRadius + 50.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AIFieldOfView = 90.f;
+	float AIFieldOfView = 140.f;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UAISenseConfig_Sight* SightConfig;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)

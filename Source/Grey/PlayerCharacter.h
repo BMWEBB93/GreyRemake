@@ -55,8 +55,7 @@ protected:
     UPROPERTY(BlueprintReadOnly, Category = "Animation")
     float lookPitch;
 
-    UPROPERTY(BlueprintReadOnly, Category = "Animation")
-    float movementDirection;
+    
 
     // Movement variables
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")

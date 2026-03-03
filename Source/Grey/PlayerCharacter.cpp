@@ -68,16 +68,7 @@ void APlayerCharacter::BeginPlay()
 // Called every frame
 void APlayerCharacter::Tick(float DeltaTime)
 {
-    Super::Tick(DeltaTime);
-
-    // get movement direction for animation
-    FVector Velocity = GetVelocity();
-    FVector Forward = GetActorForwardVector();
-
-    float ForwardDot = FVector::DotProduct(Forward, Velocity);
-    float RightDot = FVector::DotProduct(GetActorRightVector(), Velocity);
-
-    movementDirection = FMath::Atan2(RightDot, ForwardDot) * (180.f / PI);
+    Super::Tick(DeltaTime);    
 }
 
 
@@ -129,46 +120,15 @@ void APlayerCharacter::Look(const FInputActionValue& Value)
 
     // lock between 60 and -60
     if (lookPitch > 60) lookPitch = 60;
-    if (lookPitch < -60) lookPitch = -60;
-
-    if (GEngine)
-    {
-        GEngine->AddOnScreenDebugMessage(
-            1,                  // Key (replaces previous message)
-            0.f,                // Display for 1 frame
-            FColor::Yellow,     // Text color
-            FString::Printf(TEXT("LookAxis X: %.3f Y: %.3f | Pitch: %.3f"),
-                LookAxis.X, LookAxis.Y, lookPitch)
-        );
-    }
+    if (lookPitch < -60) lookPitch = -60;    
 }
 
 void APlayerCharacter::StartSprint(const FInputActionValue& Value)
 {
-    GetCharacterMovement()->MaxWalkSpeed = RunSpeed;
-
-    if (GEngine) {
-        GEngine->AddOnScreenDebugMessage(
-
-            2,                  // Message key (replaces previous with same key)
-            5.f,                // Display time, 0 = single frame
-            FColor::Yellow,     // Text color
-            FString::Printf(TEXT("SprintStart"))
-        );
-    }
+    GetCharacterMovement()->MaxWalkSpeed = RunSpeed;    
 }
 
 void APlayerCharacter::StopSprint(const FInputActionValue& Value)
 {
-    GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-
-    if (GEngine) {
-        GEngine->AddOnScreenDebugMessage(
-
-            3,                  // Message key (replaces previous with same key)
-            5.f,                // Display time, 0 = single frame
-            FColor::Yellow,     // Text color
-            FString::Printf(TEXT("SprintStop"))
-        );
-    }
+    GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;   
 }

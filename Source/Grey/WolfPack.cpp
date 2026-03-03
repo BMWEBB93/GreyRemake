@@ -85,6 +85,6 @@ AWolf* AWolfPack::GetPatrolFollowTarget(AWolf* SelfWolf)
 
 	FollowTarget = SelfWolf;
 
-	return Target;
+	return PackMembers[0];
 }
 
