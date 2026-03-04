@@ -16,6 +16,16 @@ UBTDecorator_GetPackState::UBTDecorator_GetPackState()
 
 bool UBTDecorator_GetPackState::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
+    if (GEngine)
+    {
+        GEngine->AddOnScreenDebugMessage(
+            -1,
+            1.5f,
+            FColor::Green,
+            FString::Printf(TEXT("State"))
+        );
+    }
+
     // Get AI Controller
     AAIController* WolfController = OwnerComp.GetAIOwner();
     if (!WolfController)
@@ -29,6 +39,10 @@ bool UBTDecorator_GetPackState::CalculateRawConditionValue(UBehaviorTreeComponen
     {
         return false;
     } 
+
+
+
+    
 
     // Compare with the actual pack state
     return Wolf->Pack->CurrentPackState == DesiredPackState;

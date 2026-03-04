@@ -43,6 +43,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	virtual void UpdateHierarchy();
+	virtual void SetPackState(EPackState NewState);
+
 	AWolf* GetPatrolFollowTarget(AWolf* SelfWolf);
 
 };

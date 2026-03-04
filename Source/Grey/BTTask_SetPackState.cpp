@@ -36,6 +36,6 @@ EBTNodeResult::Type UBTTask_SetPackState::ExecuteTask(UBehaviorTreeComponent& Ow
 	}
 
 	AWolfPack* WolfPack = myWolf->Pack;
-	WolfPack->CurrentPackState = DesiredPackState;
+	WolfPack->SetPackState(DesiredPackState);
 	return EBTNodeResult::Succeeded;
 }

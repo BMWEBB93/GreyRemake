@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Algo/Sort.h"
 
+#include "BehaviorTree/BehaviorTreeComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
 
 // Sets default values
 AWolfPack::AWolfPack()
@@ -86,5 +88,23 @@ AWolf* AWolfPack::GetPatrolFollowTarget(AWolf* SelfWolf)
 	FollowTarget = SelfWolf;
 
 	return PackMembers[0];
+}
+
+void AWolfPack::SetPackState(EPackState NewState)
+{
+	CurrentPackState = NewState;
+
+	for (AWolf* Wolf : PackMembers)
+	{
+		if (!Wolf) continue;
+
+		AAIController* Controller = Cast<AAIController>(Wolf->GetController());
+		if (!Controller) continue;
+
+		UBlackboardComponent* BB = Controller->GetBlackboardComponent();
+		if (!BB) continue;
+
+		BB->SetValueAsEnum("PackState", (uint8)NewState);
+	}
 }
 
