@@ -90,6 +90,32 @@ AWolf* AWolfPack::GetPatrolFollowTarget(AWolf* SelfWolf)
 	return PackMembers[0];
 }
 
+FVector AWolfPack::GetSurroundTargetPosition(AWolf* Wolf, AActor* TargetActor, float Radius)
+{
+	if (!Wolf || !TargetActor || PackMembers.Num() == 0)
+		return FVector::ZeroVector;
+
+	// Find the wolfs index in array
+	int32 Index = PackMembers.IndexOfByKey(Wolf);
+	if (Index == INDEX_NONE)
+		return FVector::ZeroVector;
+
+	FVector Centre = TargetActor->GetActorLocation();
+	float AngleDifference = 360.f / PackMembers.Num();
+	float AngleDeg = AngleDifference * Index;
+
+	float AngleRad = FMath::DegreesToRadians(AngleDeg);
+
+	// Offset vector from the target
+	FVector Offset;
+	Offset.X = FMath::Cos(AngleRad) * Radius;
+	Offset.Y = FMath::Sin(AngleRad) * Radius;
+	Offset.Z = 0.f;
+
+
+	return Centre + Offset;
+}
+
 void AWolfPack::SetPackState(EPackState NewState)
 {
 	CurrentPackState = NewState;

@@ -47,4 +47,6 @@ public:
 
 	AWolf* GetPatrolFollowTarget(AWolf* SelfWolf);
 
+	FVector GetSurroundTargetPosition(AWolf* Wolf, AActor* TargetActor, float Radius = 600.f);
+
 };
