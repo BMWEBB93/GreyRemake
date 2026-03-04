@@ -72,7 +72,7 @@ protected:
     // Follow camera
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
     class UCameraComponent* FollowCamera;
-
+        
     
 
 public:
@@ -87,6 +87,9 @@ public:
     void Look(const FInputActionValue& Value);
     void StartSprint(const FInputActionValue& Value);
     void StopSprint(const FInputActionValue& Value);
+
+    
+
 
 
 

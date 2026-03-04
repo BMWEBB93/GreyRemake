@@ -6,6 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Sound/SoundAttenuation.h"
 
 #include "BaseCharacter.generated.h"
 
@@ -42,6 +43,26 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Animation")
 	bool bIsInAir;
 
+
+	// Sounds
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	TArray<USoundBase*> FootstepSounds;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	USoundAttenuation* FootstepAttenuation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	TArray<USoundBase*> HowlSounds;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	USoundAttenuation* HowlAttenuation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	TArray<USoundBase*> GrowlSounds;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+	USoundAttenuation* GrowlAttenuation;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -51,5 +72,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Heal(float HealAmount);
+
+	// Play Audio
+	void PlayFootstepAtLocation(float Volume);
+	void PlayHowlAtLocation(float Volume);
+	void PlayGrowlAtLocation(float Volume);
+
 
 };

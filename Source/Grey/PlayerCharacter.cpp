@@ -2,6 +2,7 @@
 
 
 #include "PlayerCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -37,7 +38,7 @@ APlayerCharacter::APlayerCharacter()
     GetCharacterMovement()->BrakingDecelerationWalking = 1000.f;
 
     
-
+   
 }
 
 
@@ -132,3 +133,7 @@ void APlayerCharacter::StopSprint(const FInputActionValue& Value)
 {
     GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;   
 }
+
+
+
+

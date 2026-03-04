@@ -2,7 +2,7 @@
 
 #pragma once
 
-
+#include "Sound/SoundBase.h"
 #include "CoreMinimal.h"
 #include "BaseCharacter.h"
 #include "WolfPack.h"
@@ -51,5 +51,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	float RunSpeed = 800.f;
-
+	
 };
