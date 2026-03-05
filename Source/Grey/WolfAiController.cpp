@@ -51,11 +51,7 @@ void AWolfAiController::Tick(float DeltaSeconds)
 
 
 
-	if (DistanceToPlayer > AISightRadius)
-	{
-		BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", false);
-		BBC->ClearValue("TargetActor");		
-	}
+	
 }
 
 
@@ -66,7 +62,7 @@ void AWolfAiController::OnPossess(APawn* InPawn)
 	if (MyWolf && MyWolf->TreeAsset)
 	{
 		BBC->InitializeBlackboard(*MyWolf->TreeAsset->BlackboardAsset);
-		EnemyKeyID = BBC->GetKeyID("TargetActor");
+		EnemyKeyID = BBC->GetKeyID("Enemy");
 		BTC->StartTree(*MyWolf->TreeAsset);
 	}
 }
@@ -83,15 +79,30 @@ FRotator AWolfAiController::GetControlRotation() const
 
 void AWolfAiController::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
 {
+	bool bPlayerSeen = false;
 	for (size_t i = 0; i < DetectedPawns.Num(); i++) 
 	{
 		if (DetectedPawns[i] == GetWorld()->GetFirstPlayerController()->GetPawn())
 		{
+			bPlayerSeen = true;
+
 			DistanceToPlayer = GetPawn()->GetDistanceTo(DetectedPawns[i]);
 			BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", true);
-			BBC->SetValue<UBlackboardKeyType_Object>("TargetActor", DetectedPawns[i]);
+			BBC->SetValue<UBlackboardKeyType_Object>("Enemy", DetectedPawns[i]);
 		}
 	}	
+
+	if (!bPlayerSeen || DistanceToPlayer > AISightRadius)
+	{
+		BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", false);
+		BBC->ClearValue("Enemy");
+	}
+}
+
+AActor* AWolfAiController::GetSeeingPawn()
+{
+	UObject* object = BBC->GetValueAsObject(BlackboardEnemyKey);
+	return object ? Cast<AActor>(object) : nullptr;
 }
 
 void AWolfAiController::SetupPackData()

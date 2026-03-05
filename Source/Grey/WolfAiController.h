@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "AIController.h"
+
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
+
 #include "WolfAiController.generated.h"
 
 /**
@@ -25,6 +29,9 @@ public:
 	virtual FRotator GetControlRotation() const override;
 	UFUNCTION()
 	void OnPawnDetected(const TArray<AActor*>& DetectedPawns);
+
+	AActor* GetSeeingPawn();
+	const FName BlackboardEnemyKey = FName("Enemy");
 
 	void SetupPackData();
 
