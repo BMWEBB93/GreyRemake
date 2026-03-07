@@ -19,6 +19,8 @@
 #include "EnhancedInputComponent.h"
 #include "Components/InputComponent.h"
 
+#include "PlayerItem.h"
+
 #include "PlayerCharacter.generated.h"
 
 /**
@@ -41,6 +43,7 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
     class UInputMappingContext* DefaultMappingContext;
 
+
     // Input actions
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
     UInputAction* MoveAction;
@@ -50,6 +53,33 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
     UInputAction* SprintAction;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* InteractAction;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item0Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item1Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item2Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item3Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item4Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item5Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item6Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item7Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item8Action;
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* Item9Action;
+
+
+
 
     // Animation variables
     UPROPERTY(BlueprintReadOnly, Category = "Animation")
@@ -63,6 +93,21 @@ protected:
     
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
     float RunSpeed = 800.f;
+
+
+    // Inventory
+    UPROPERTY (EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+    TArray<APlayerItem*> HeldItems;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+    APlayerItem* LeftEquippedItem;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+    APlayerItem* RightEquippedItem;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+    APlayerItem* LookedAtItem;
+
 
 
     // Camera boom (spring arm)
@@ -87,7 +132,19 @@ public:
     void Look(const FInputActionValue& Value);
     void StartSprint(const FInputActionValue& Value);
     void StopSprint(const FInputActionValue& Value);
+    void Interact(const FInputActionValue& Value);
+    void Item0(const FInputActionValue& Value);
+    void Item1(const FInputActionValue& Value);
+    void Item2(const FInputActionValue& Value);
+    void Item3(const FInputActionValue& Value);
+    void Item4(const FInputActionValue& Value);
+    void Item5(const FInputActionValue& Value);
+    void Item6(const FInputActionValue& Value);
+    void Item7(const FInputActionValue& Value);
+    void Item8(const FInputActionValue& Value);
+    void Item9(const FInputActionValue& Value);
 
+    void CheckLookAtItem();
     
 
 

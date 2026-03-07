@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ItemType.h"
 #include "PlayerItem.generated.h"
 
 UCLASS()
@@ -15,6 +16,21 @@ public:
 	// Sets default values for this actor's properties
 	APlayerItem();
 
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* ItemMesh;
+
+	UPROPERTY(BlueprintReadWrite)
+	EItemType Type;
+
+	UPROPERTY(BlueprintReadWrite)
+	FText ItemName;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bRightHand = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsEquipped = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -23,4 +39,9 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void DisableCollision();
+	virtual void EnableCollision();
+	virtual void Uequip();
+	virtual void Equip();
+	
 };
