@@ -2,12 +2,14 @@
 
 
 #include "Torch.h"
+#include "AnimationType.h"
 
 ATorch::ATorch()
 {
     PrimaryActorTick.bCanEverTick = false;
 
     ItemName = FText::FromString("Torch");
+    AnimationType = EAnimationType::Torch;
 
     TorchLight = CreateDefaultSubobject<USpotLightComponent>("TorchLight");
     TorchLight->SetupAttachment(RootComponent);

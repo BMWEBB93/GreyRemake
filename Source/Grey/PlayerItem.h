@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ItemType.h"
+#include "AnimationType.h"
 #include "PlayerItem.generated.h"
 
 UCLASS()
@@ -21,6 +22,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	EItemType Type;
+
+	UPROPERTY(BlueprintReadWrite)
+	EAnimationType AnimationType;
 
 	UPROPERTY(BlueprintReadWrite)
 	FText ItemName;
