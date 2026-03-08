@@ -58,6 +58,12 @@ protected:
     UInputAction* InteractAction;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* LeftHandAction;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
+    UInputAction* RightHandAction;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
     UInputAction* Item0Action;
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
     UInputAction* Item1Action;
@@ -133,6 +139,9 @@ public:
     void StartSprint(const FInputActionValue& Value);
     void StopSprint(const FInputActionValue& Value);
     void Interact(const FInputActionValue& Value);
+    void LeftHand(const FInputActionValue& Value);
+    void RightHand(const FInputActionValue& Value);
+
     void Item0(const FInputActionValue& Value);
     void Item1(const FInputActionValue& Value);
     void Item2(const FInputActionValue& Value);

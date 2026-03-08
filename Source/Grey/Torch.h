@@ -15,18 +15,20 @@ class GREY_API ATorch : public APlayerItem
 {
 	GENERATED_BODY()
 	
+public:
+
 	ATorch();
 
 protected:
     
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     USpotLightComponent* TorchLight;
 
-    UPROPERTY(EditAnywhere)
+    UPROPERTY(EditAnywhere, BlueprintReadOnly)
     bool bIsLit;
 
     UPROPERTY(EditAnywhere)
-    float LightIntensity = 10000.f;
+    float LightIntensity = 20000.f;
 
 public:
     UFUNCTION(BlueprintCallable)
@@ -37,4 +39,8 @@ public:
 
     UFUNCTION(BlueprintCallable)
     void TurnOff();
+
+    UFUNCTION(BlueprintCallable)
+    virtual void UseItem() override;
+    virtual void BeginPlay() override;
 };

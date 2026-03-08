@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "AnimNotify_PlayFootstep.h"
+
 #include "Wolf.h"
 #include "PlayerCharacter.h"
-#include "AnimNotify_PlayFootstep.h"
 
 void UAnimNotify_PlayFootstep::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {

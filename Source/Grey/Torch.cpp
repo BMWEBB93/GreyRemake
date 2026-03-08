@@ -6,23 +6,31 @@
 
 ATorch::ATorch()
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 
     ItemName = FText::FromString("Torch");
     AnimationType = EAnimationType::Torch;
 
-    TorchLight = CreateDefaultSubobject<USpotLightComponent>("TorchLight");
+    TorchLight = CreateDefaultSubobject<USpotLightComponent>(TEXT("TorchLight"));
     TorchLight->SetupAttachment(RootComponent);
 
-    TorchLight->Intensity = 0.f;
-    TorchLight->AttenuationRadius = 3000.f;
+    TorchLight->Intensity = 15000.f;
+    TorchLight->AttenuationRadius = 2000.f;
     TorchLight->InnerConeAngle = 10.f;
     TorchLight->OuterConeAngle = 35.f;
     TorchLight->SourceRadius = 1.f;
     TorchLight->SoftSourceRadius = 1.f;
 
-    bIsLit = false;
+    bIsLit = true;
 }
+
+
+void ATorch::BeginPlay()
+{
+    LightIntensity = TorchLight->Intensity;
+        
+}
+
 
 void ATorch::ToggleTorch()
 {
@@ -34,16 +42,28 @@ void ATorch::ToggleTorch()
     {
         TurnOn();
     }
+   
 }
 
 void ATorch::TurnOn()
 {
+    TorchLight->SetVisibility(true);
     TorchLight->Intensity = LightIntensity;
     bIsLit = true;
+   
 }
 
 void ATorch::TurnOff()
 {
+    TorchLight->SetVisibility(false);
     TorchLight->Intensity = 0.f;
     bIsLit = false;
+   
 }
+
+void ATorch::UseItem()
+{
+    ToggleTorch();
+}
+
+

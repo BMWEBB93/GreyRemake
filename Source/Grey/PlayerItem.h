@@ -43,6 +43,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void UseItem();
 	virtual void DisableCollision();
 	virtual void EnableCollision();
 	virtual void Uequip();

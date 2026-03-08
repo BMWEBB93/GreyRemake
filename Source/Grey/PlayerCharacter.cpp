@@ -91,6 +91,8 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
         enhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &APlayerCharacter::StartSprint);
         enhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &APlayerCharacter::StopSprint);
         enhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &APlayerCharacter::Interact);
+        enhancedInputComponent->BindAction(LeftHandAction, ETriggerEvent::Started, this, &APlayerCharacter::LeftHand);
+        enhancedInputComponent->BindAction(RightHandAction, ETriggerEvent::Started, this, &APlayerCharacter::RightHand);
 
         // Item selection
         enhancedInputComponent->BindAction(Item0Action, ETriggerEvent::Started, this, &APlayerCharacter::Item0);
@@ -187,6 +189,24 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
         }
     }
     
+}
+
+void APlayerCharacter::LeftHand(const FInputActionValue& Value)
+{
+    if (LeftEquippedItem != NULL)
+    {
+
+
+        LeftEquippedItem->UseItem();
+    }
+}
+
+void APlayerCharacter::RightHand(const FInputActionValue& Value)
+{
+    if (RightEquippedItem != NULL)
+    {
+        RightEquippedItem->UseItem();
+    }
 }
 
 void APlayerCharacter::Item0(const FInputActionValue& Value)

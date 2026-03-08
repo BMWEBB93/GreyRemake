@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "AnimNotify_PlayHowl.h"
+
 #include "Wolf.h"
 #include "PlayerCharacter.h"
-#include "AnimNotify_PlayHowl.h"
 
 void UAnimNotify_PlayHowl::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {

@@ -29,6 +29,10 @@ void APlayerItem::Tick(float DeltaTime)
 
 }
 
+void APlayerItem::UseItem()
+{
+}
+
 void APlayerItem::DisableCollision()
 {
 	ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision); // Turn off collision
