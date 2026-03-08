@@ -13,6 +13,10 @@ APlayerItem::APlayerItem()
 
 	RootComponent = ItemMesh;
 
+	ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); // Turn on collision
+	ItemMesh->SetSimulatePhysics(true);    // Turn on physics
+	ItemMesh->SetEnableGravity(true);      // Turn on gravity
+
 }
 
 // Called when the game starts or when spawned
@@ -35,9 +39,10 @@ void APlayerItem::UseItem()
 
 void APlayerItem::DisableCollision()
 {
-	ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision); // Turn off collision
-	ItemMesh->SetSimulatePhysics(false);    // Turn off physics
 	ItemMesh->SetEnableGravity(false);      // Turn off gravity
+	ItemMesh->SetSimulatePhysics(false);    // Turn off physics
+	ItemMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision); // Turn off collision
+
 }
 
 void APlayerItem::EnableCollision()

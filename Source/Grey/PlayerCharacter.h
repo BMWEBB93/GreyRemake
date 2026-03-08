@@ -124,7 +124,13 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
     class UCameraComponent* FollowCamera;
         
-    
+    // Widget
+    UPROPERTY (EditDefaultsOnly, Category = "UI")
+    TSubclassOf <class UUserWidget> WidgetReference;
+
+    UPROPERTY()
+    UUserWidget* CreatedWidget;
+
 
 public:
 	// Called every frame

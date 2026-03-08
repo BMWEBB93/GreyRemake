@@ -8,6 +8,6 @@ UENUM(BlueprintType)
 enum class EAnimationType : uint8
 {
     Torch        UMETA(DisplayName = "Torch"),
-    MeleeWeapon  UMETA(DisplayName = "MeleeWeapon"),
+    Axe  UMETA(DisplayName = "Axe"),
 
 };

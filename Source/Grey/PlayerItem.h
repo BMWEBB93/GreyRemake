@@ -29,6 +29,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FText ItemName;
 
+	UPROPERTY(EditAnywhere)
+	UTexture2D* ItemImage;
+
 	UPROPERTY(BlueprintReadWrite)
 	bool bRightHand = false;
 

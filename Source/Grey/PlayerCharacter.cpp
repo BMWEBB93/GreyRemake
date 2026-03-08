@@ -3,6 +3,8 @@
 
 #include "PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Blueprint/UserWidget.h"
+
 
 // Sets default values
 APlayerCharacter::APlayerCharacter()
@@ -63,6 +65,16 @@ void APlayerCharacter::BeginPlay()
         }
     }   
 
+    // Set up widget
+    if (IsValid(WidgetReference))
+    {
+        CreatedWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetReference);
+
+        if (IsValid(CreatedWidget))
+        {
+            CreatedWidget->AddToViewport();
+        }
+    }
     
 }
 
@@ -158,6 +170,7 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
     {
         LookedAtItem->DisableCollision();
         HeldItems.Add(LookedAtItem);
+        LookedAtItem->SetOwner(this);
 
         if (LookedAtItem->bRightHand) // item is a right handed item
         {
@@ -203,6 +216,9 @@ void APlayerCharacter::LeftHand(const FInputActionValue& Value)
 
 void APlayerCharacter::RightHand(const FInputActionValue& Value)
 {
+    
+
+
     if (RightEquippedItem != NULL)
     {
         RightEquippedItem->UseItem();
