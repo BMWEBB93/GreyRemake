@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
+#include "Components/TextBlock.h"
+
 
 #include "HudWidget.generated.h"
 
@@ -49,7 +51,11 @@ protected:
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	class UImage* Image9;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	class UTextBlock* ItemPreview;
+
 public:
 	void SetSlotIcon(int32 Index, UTexture2D* Icon);
-
+	UFUNCTION(BlueprintCallable)
+	void SetItemPreviewText(FText Text);
 };

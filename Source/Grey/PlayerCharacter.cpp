@@ -452,6 +452,12 @@ void APlayerCharacter::CheckLookAtItem()
         {
 
             LookedAtItem = Item;
+
+            if (Hud)
+            {
+                Hud->SetItemPreviewText(LookedAtItem->ItemName);
+            }
+
             if (GEngine)
             {
                 GEngine->AddOnScreenDebugMessage(
@@ -461,12 +467,18 @@ void APlayerCharacter::CheckLookAtItem()
                     FString::Printf(TEXT("Looking at: %s"), *Item->ItemName.ToString())
                 );
             }
+
+        }
+        else
+        {
+            if (Hud)
+            {
+                Hud->SetItemPreviewText(FText::GetEmpty());
+            }
+            LookedAtItem = NULL;
         }
     }
-    else
-    {
-        LookedAtItem = NULL;
-    }
+    
 }
 
 void APlayerCharacter::UpdateInventory()

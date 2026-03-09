@@ -12,3 +12,11 @@ void UHudWidget::SetSlotIcon(int32 Index, UTexture2D* Icon)
         Slots[Index]->SetBrushFromTexture(Icon);
     }
 }
+
+void UHudWidget::SetItemPreviewText(FText Text)
+{
+    if (ItemPreview)
+    {
+        ItemPreview->SetText(Text);
+    }
+}
