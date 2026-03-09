@@ -29,7 +29,7 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	FText ItemName;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UTexture2D* ItemImage;
 
 	UPROPERTY(BlueprintReadWrite)

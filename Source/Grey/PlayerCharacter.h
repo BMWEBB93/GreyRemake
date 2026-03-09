@@ -20,6 +20,7 @@
 #include "Components/InputComponent.h"
 
 #include "PlayerItem.h"
+#include "HudWidget.h"
 
 #include "PlayerCharacter.generated.h"
 
@@ -125,11 +126,11 @@ protected:
     class UCameraComponent* FollowCamera;
         
     // Widget
-    UPROPERTY (EditDefaultsOnly, Category = "UI")
-    TSubclassOf <class UUserWidget> WidgetReference;
+    UPROPERTY (EditAnywhere, Category = "UI")
+    TSubclassOf <class UHudWidget> WidgetReference;
 
     UPROPERTY()
-    UUserWidget* CreatedWidget;
+    UHudWidget* Hud;
 
 
 public:
@@ -160,7 +161,7 @@ public:
     void Item9(const FInputActionValue& Value);
 
     void CheckLookAtItem();
-    
+    void UpdateInventory();
 
 
 

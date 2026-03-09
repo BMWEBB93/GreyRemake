@@ -68,11 +68,11 @@ void APlayerCharacter::BeginPlay()
     // Set up widget
     if (IsValid(WidgetReference))
     {
-        CreatedWidget = CreateWidget<UUserWidget>(GetWorld(), WidgetReference);
+        Hud = CreateWidget<UHudWidget>(GetWorld(), WidgetReference);
 
-        if (IsValid(CreatedWidget))
+        if (IsValid(Hud))
         {
-            CreatedWidget->AddToViewport();
+            Hud->AddToViewport();
         }
     }
     
@@ -171,6 +171,12 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
         LookedAtItem->DisableCollision();
         HeldItems.Add(LookedAtItem);
         LookedAtItem->SetOwner(this);
+
+        if (Hud && LookedAtItem->ItemImage)
+        {
+            int32 Slot = HeldItems.Num() - 1;
+            Hud->SetSlotIcon(Slot, LookedAtItem->ItemImage);
+        }
 
         if (LookedAtItem->bRightHand) // item is a right handed item
         {
@@ -461,6 +467,11 @@ void APlayerCharacter::CheckLookAtItem()
     {
         LookedAtItem = NULL;
     }
+}
+
+void APlayerCharacter::UpdateInventory()
+{
+    
 }
 
 
