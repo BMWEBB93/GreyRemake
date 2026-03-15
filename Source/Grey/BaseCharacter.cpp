@@ -3,6 +3,8 @@
 
 #include "BaseCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Perception/AISense_Hearing.h"
+
 
 
 // Sets default values
@@ -64,6 +66,14 @@ void ABaseCharacter::PlayFootstepAtLocation(float Volume)
 
 		float Pitch = FMath::RandRange(0.9f, 1.1f);
 		UGameplayStatics::PlaySoundAtLocation(this, RandFootstepSound, GetActorLocation(), Volume, Pitch, 0.f, FootstepAttenuation);
+
+
+		// report to ai sense
+		UAISense_Hearing::ReportNoiseEvent(
+			this->GetWorld(),
+			this->GetActorLocation(),
+			Volume,
+			this);
 	}	
 }
 
@@ -77,6 +87,13 @@ void ABaseCharacter::PlayHowlAtLocation(float Volume)
 
 		float Pitch = FMath::RandRange(0.9f, 1.1f);
 		UGameplayStatics::PlaySoundAtLocation(this, RandHowlSound, GetActorLocation(), Volume, Pitch, 0.f, HowlAttenuation);
+
+		// report to ai sense
+		UAISense_Hearing::ReportNoiseEvent(
+			this->GetWorld(),
+			this->GetActorLocation(),
+			Volume,
+			this);
 	}
 }
 
@@ -90,6 +107,13 @@ void ABaseCharacter::PlayGrowlAtLocation(float Volume)
 
 		float Pitch = FMath::RandRange(0.9f, 1.1f);
 		UGameplayStatics::PlaySoundAtLocation(this, RandGrowlSound, GetActorLocation(), Volume, Pitch, 0.f, GrowlAttenuation);
+
+		// report to ai sense
+		UAISense_Hearing::ReportNoiseEvent(
+			this->GetWorld(),
+			this->GetActorLocation(),
+			Volume,
+			this);
 	}
 }
 

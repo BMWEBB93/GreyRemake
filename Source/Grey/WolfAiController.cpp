@@ -23,19 +23,37 @@ AWolfAiController::AWolfAiController()
 	BBC = CreateDefaultSubobject<UBlackboardComponent>("Blackboard");
 	BTC = CreateDefaultSubobject<UBehaviorTreeComponent>("BehaviorTree");	
 
-	PrimaryActorTick.bCanEverTick = true;
+	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>("Perception");
+	SetPerceptionComponent(*PerceptionComponent);
+
+	// Sight config
 	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>("Sight Config");
-	SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>("Perception"));
-	SightConfig->SightRadius = AISightRadius;
+	SightConfig->SightRadius = AiSightRadius;
 	SightConfig->LoseSightRadius = AILoseSightRadius;
 	SightConfig->PeripheralVisionAngleDegrees = AIFieldOfView;
 	SightConfig->SetMaxAge(AISightAge);
 	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
 	SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
-	GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
-	GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(this, &AWolfAiController::OnPawnDetected);
-	GetPerceptionComponent()->ConfigureSense(*SightConfig);
+
+
+
+	// Hearing config
+	HearingConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing Config"));
+	HearingConfig->HearingRange = HearingRange;
+	HearingConfig->SetMaxAge(AiHearingAge);
+	HearingConfig->DetectionByAffiliation.bDetectEnemies = true;
+	HearingConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	HearingConfig->DetectionByAffiliation.bDetectNeutrals = true;
+
+
+	PerceptionComponent->ConfigureSense(*HearingConfig);
+	PerceptionComponent->ConfigureSense(*SightConfig);
+
+	PerceptionComponent->SetDominantSense(*SightConfig->GetSenseImplementation());
+	PerceptionComponent->OnPerceptionUpdated.AddDynamic(this, &AWolfAiController::OnPawnDetected);
+
+
 }
 
 
@@ -50,7 +68,7 @@ void AWolfAiController::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 
-
+	
 	
 }
 
@@ -62,8 +80,9 @@ void AWolfAiController::OnPossess(APawn* InPawn)
 	if (MyWolf && MyWolf->TreeAsset)
 	{
 		BBC->InitializeBlackboard(*MyWolf->TreeAsset->BlackboardAsset);
-		EnemyKeyID = BBC->GetKeyID("Enemy");
 		BTC->StartTree(*MyWolf->TreeAsset);
+
+		EnemyKeyID = BBC->GetKeyID("Enemy");
 	}
 }
 
@@ -79,25 +98,66 @@ FRotator AWolfAiController::GetControlRotation() const
 
 void AWolfAiController::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
 {
-	bool bPlayerSeen = false;
-	for (size_t i = 0; i < DetectedPawns.Num(); i++) 
-	{
-		if (DetectedPawns[i] == GetWorld()->GetFirstPlayerController()->GetPawn())
-		{
-			bPlayerSeen = true;
 
-			DistanceToPlayer = GetPawn()->GetDistanceTo(DetectedPawns[i]);
-			BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", true);
-			BBC->SetValue<UBlackboardKeyType_Object>("Enemy", DetectedPawns[i]);
-		}
+	
+
+
+
+	bool bPlayerSeen = false;
+	bool bHeardSomething = false;
+
+	for (AActor* Detected : DetectedPawns)
+	{
+		FActorPerceptionBlueprintInfo Info;
+		PerceptionComponent->GetActorsPerception(Detected, Info);
+
+		
+
+
+		for (const FAIStimulus& Stimulus : Info.LastSensedStimuli)
+		{
+			
+
+			// Sight
+			if (Stimulus.Type == UAISense_Sight::StaticClass()->GetDefaultObject<UAISense>()->GetSenseID())
+			{
+				
+
+				if (Detected == UGameplayStatics::GetPlayerPawn(this, 0))
+				{			
+					bPlayerSeen = true;
+					DistanceToPlayer = GetPawn()->GetDistanceTo(Detected);
+					BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", true);
+					BBC->SetValue<UBlackboardKeyType_Object>("Enemy", Detected);
+				}
+			}
+
+			// Hearing
+			if (Stimulus.Type == UAISense_Hearing::StaticClass()->GetDefaultObject<UAISense>()->GetSenseID())
+			{			
+				if (Stimulus.WasSuccessfullySensed())
+				{					
+					bHeardSomething = true;
+					BBC->SetValue<UBlackboardKeyType_Bool>("bHeardNoise", true);
+					BBC->SetValue<UBlackboardKeyType_Object>("HeardActor", Detected);
+				}
+			}
+		}		
 	}	
 
-	if (!bPlayerSeen || DistanceToPlayer > AISightRadius)
+	if (!bPlayerSeen || DistanceToPlayer > AiSightRadius)
 	{
 		BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", false);
 		BBC->ClearValue("Enemy");
 	}
+
+	if (!bHeardSomething)
+	{
+		BBC->SetValue<UBlackboardKeyType_Bool>("bHeardNoise", false);
+		BBC->ClearValue("HeardActor");
+	}
 }
+
 
 AActor* AWolfAiController::GetSeeingPawn()
 {

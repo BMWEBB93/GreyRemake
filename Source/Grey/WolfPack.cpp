@@ -6,6 +6,8 @@
 #include "WolfAiController.h"
 #include "Kismet/GameplayStatics.h"
 #include "Algo/Sort.h"
+#include "PackState.h"
+
 
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
@@ -24,8 +26,8 @@ void AWolfPack::BeginPlay()
 	Super::BeginPlay();
 
 
-	// get all wolves in level and add to pack
-	TArray <AActor*> FoundActors;
+	// get all wolves in level and add to pack 
+	/*TArray <AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWolf::StaticClass(), FoundActors);
 
 	PackMembers.Empty();
@@ -33,16 +35,21 @@ void AWolfPack::BeginPlay()
 	{
 		if (AWolf* Wolf = Cast<AWolf>(Actor))
 		{
-			PackMembers.Add(Wolf);
-			Wolf->Pack = this;
+			if (Wolf->Pack == NULL)
+			{
+				PackMembers.Add(Wolf);
+			}
+			
 		}
-	}
+	}*/
 
 	// Randomize sizes first
 	for (AWolf* Wolf : PackMembers)
 	{
 		if (Wolf)
 		{
+			Wolf->Pack = this;
+
 			float RandomScale = FMath::FRandRange(0.9f, 1.2f);
 			Wolf->SetActorScale3D(FVector(RandomScale));
 		}
@@ -56,6 +63,64 @@ void AWolfPack::BeginPlay()
 void AWolfPack::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	for (AWolf* Wolf : PackMembers)
+	{
+		if (!Wolf) continue;
+
+		AAIController* Controller = Cast<AAIController>(Wolf->GetController());
+		if (!Controller) continue;
+
+		UBlackboardComponent* BB = Controller->GetBlackboardComponent();
+		if (!BB) continue;
+
+		BB->SetValueAsFloat("PackMorale", PackMorale);
+		BB->SetValueAsFloat("PackStamina", PackStamina);
+	}
+	
+	switch (CurrentPackState)
+	{
+	case EPackState::Idle:
+
+		if (PackStamina < 100.f)
+			PackStamina += 0.01f;
+
+		break;
+
+	case EPackState::Patrolling:
+
+		if (PackStamina > 0.f)
+			PackStamina -= 0.001f;
+
+		break;
+
+	case EPackState::Hunting:
+
+		if(PackMorale < 100.f)
+			PackMorale += .001f;
+	
+		if (PackStamina > 0.f)
+			PackStamina -= 0.002f;
+
+		break;
+
+	case EPackState::Attacking:
+		if(PackMorale < 100.f)
+			PackMorale += .01f;
+
+		if (PackStamina > 0.f)
+			PackStamina -= 0.01f;
+
+		break;
+
+	default:
+		break;
+	}
+
+
+
+
+	
 
 }
 
@@ -74,6 +139,8 @@ void AWolfPack::UpdateHierarchy()
 		PackMembers[i]->AlphaWolf = PackMembers[0];
 		PackMembers[i]->HierarchyRank = i;
 
+		PackMembers[i]->GetCharacterMovement()->AvoidanceWeight = i;
+
 		AWolfAiController* AI = Cast<AWolfAiController>(PackMembers[i]->GetController());
 		AI->SetupPackData();
 	}
@@ -83,11 +150,17 @@ void AWolfPack::UpdateHierarchy()
 
 AWolf* AWolfPack::GetPatrolFollowTarget(AWolf* SelfWolf)
 {
-	AWolf* Target = FollowTarget;
+	if (!SelfWolf)
+		return nullptr;
 
-	FollowTarget = SelfWolf;
+	int32 Rank = SelfWolf->HierarchyRank;
 
-	return PackMembers[0];
+	// Alpha leads
+	if (Rank == 0)
+		return nullptr;
+
+	// Follow the wolf above in hierarchy
+	return PackMembers[Rank - 1];
 }
 
 FVector AWolfPack::GetSurroundTargetPosition(AWolf* Wolf, AActor* TargetActor, float Radius)
@@ -116,6 +189,13 @@ FVector AWolfPack::GetSurroundTargetPosition(AWolf* Wolf, AActor* TargetActor, f
 	return Centre + Offset;
 }
 
+void AWolfPack::SetRandPatrolPath()
+{
+	int32 RandomIndex = FMath::RandRange(0, AvailablePatrolPaths.Num() - 1);
+
+	CurrentPatrolPath = AvailablePatrolPaths[RandomIndex];
+}
+
 void AWolfPack::SetPackState(EPackState NewState)
 {
 	CurrentPackState = NewState;
@@ -131,6 +211,7 @@ void AWolfPack::SetPackState(EPackState NewState)
 		if (!BB) continue;
 
 		BB->SetValueAsEnum("PackState", (uint8)NewState);
+		
 	}
 }
 

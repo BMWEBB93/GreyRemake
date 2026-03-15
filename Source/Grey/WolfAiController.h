@@ -7,6 +7,7 @@
 
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AISenseConfig_Hearing.h"
 
 #include "WolfAiController.generated.h"
 
@@ -35,20 +36,39 @@ public:
 
 	void SetupPackData();
 
-
+	//
 	// AI perception variables
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AISightRadius = 1500.f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AISightAge = 5.f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AILoseSightRadius = AISightRadius + 50.f;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AIFieldOfView = 140.f;
+	//
+	// Sight
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class UAISenseConfig_Sight* SightConfig;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float AiSightRadius = 2000.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float AISightAge = 5.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float AILoseSightRadius = AiSightRadius + 50.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float AIFieldOfView = 50.f;	
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float DistanceToPlayer = 0.0f;
+
+
+	// Hearing
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	UAISenseConfig_Hearing* HearingConfig;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float HearingRange = 2000.f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	float AiHearingAge = 5.f;
+
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	bool bIsPlayerDetected = false;

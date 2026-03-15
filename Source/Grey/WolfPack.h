@@ -32,7 +32,16 @@ public:
 	EPackState CurrentPackState;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	class APatrolPath* PatrolPath;
+	class APatrolPath* CurrentPatrolPath;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TArray<APatrolPath*> AvailablePatrolPaths;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PackMorale = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float PackStamina = 100.f;
 
 protected:
 	// Called when the game starts or when spawned
@@ -49,4 +58,5 @@ public:
 
 	FVector GetSurroundTargetPosition(AWolf* Wolf, AActor* TargetActor, float Radius = 600.f);
 
+	void SetRandPatrolPath();
 };

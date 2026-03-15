@@ -214,17 +214,12 @@ void APlayerCharacter::LeftHand(const FInputActionValue& Value)
 {
     if (LeftEquippedItem != NULL)
     {
-
-
         LeftEquippedItem->UseItem();
     }
 }
 
 void APlayerCharacter::RightHand(const FInputActionValue& Value)
 {
-    
-
-
     if (RightEquippedItem != NULL)
     {
         RightEquippedItem->UseItem();
@@ -458,15 +453,7 @@ void APlayerCharacter::CheckLookAtItem()
                 Hud->SetItemPreviewText(LookedAtItem->ItemName);
             }
 
-            if (GEngine)
-            {
-                GEngine->AddOnScreenDebugMessage(
-                    -1,
-                    0.f, // 0 = updates every frame
-                    FColor::Green,
-                    FString::Printf(TEXT("Looking at: %s"), *Item->ItemName.ToString())
-                );
-            }
+            
 
         }
         else

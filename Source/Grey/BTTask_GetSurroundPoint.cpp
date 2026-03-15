@@ -40,6 +40,6 @@ EBTNodeResult::Type UBTTask_GetSurroundPoint::ExecuteTask(UBehaviorTreeComponent
 
 	AActor* TargetActor = Cast<AActor>(MyBlackboard->GetValueAsObject(TargetActorKey.SelectedKeyName));
 
-	MyBlackboard->SetValue<UBlackboardKeyType_Vector>("MoveToLocation", WolfPack->GetSurroundTargetPosition(myWolf, TargetActor, 800.f));
+	MyBlackboard->SetValue<UBlackboardKeyType_Vector>("MoveToLocation", WolfPack->GetSurroundTargetPosition(myWolf, TargetActor, 1600.f));
 	return EBTNodeResult::Succeeded;
 }

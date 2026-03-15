@@ -41,7 +41,10 @@ protected:
 	float movementDirection;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Animation")
-	bool bIsInAir;
+	bool bIsInAir = false;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Animation")
+	bool bShouldHit = false;
 
 
 	// Sounds

@@ -1,23 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTTask_GetPathPoints.h"
+#include "BTTask_GetRandomPatrolRoute.h"
 
 #include "WolfPack.h"
 #include "AIController.h"
-#include "Components/SplineComponent.h"
 #include "Wolf.h"
 #include "PatrolPath.h"
-#include "BehaviorTree/BlackboardComponent.h"
-#include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 
-UBTTask_GetPathPoints::UBTTask_GetPathPoints()
+
+UBTTask_GetRandomPatrolRoute::UBTTask_GetRandomPatrolRoute()
 {
 	bCreateNodeInstance = true;
-	NodeName = "GetPathPoints";
+	NodeName = "GetRandomPatrolRoute";
 }
 
-EBTNodeResult::Type UBTTask_GetPathPoints::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+EBTNodeResult::Type UBTTask_GetRandomPatrolRoute::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	// check if AIController or Blackboard exist in the AI Character
 	const UBlackboardComponent* MyBlackboard = OwnerComp.GetBlackboardComponent();
@@ -38,24 +36,8 @@ EBTNodeResult::Type UBTTask_GetPathPoints::ExecuteTask(UBehaviorTreeComponent& O
 
 	//Check if PatrolPath reference is valid and locations are populated
 	AWolfPack* WolfPack = Cast<AWolfPack>(myWolf->Pack);
-	APatrolPath* PathRef = Cast<APatrolPath>(WolfPack->CurrentPatrolPath);
+	WolfPack->SetRandPatrolPath();
 
-	if (!PathRef || PathRef->Locations.Num() < 1)
-	{
-		return EBTNodeResult::Succeeded;
-	}
-	
-
-	//Set the MoveToLocation Blackboard key to be the spline point
-	OwnerComp.GetBlackboardComponent()->SetValue<UBlackboardKeyType_Vector>("MoveToLocation",
-		PathRef->Locations[Index]);
-	if (Index < PathRef->Locations.Num() - 1) {
-		Index++;
-		return EBTNodeResult::Succeeded;
-	}
-	Index = 1;
 	return EBTNodeResult::Succeeded;
+
 }
-
-
-
