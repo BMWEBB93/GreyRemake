@@ -81,6 +81,10 @@ public:
 	class UBlackboardComponent* BBC;
 	uint16 EnemyKeyID; //This variable is not used today, but a usual practice
 
+	UPROPERTY (EditAnywhere, BlueprintReadWrite)
+	FVector LastEnemyPosition;
+
+
 protected:
 
 };

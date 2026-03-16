@@ -13,6 +13,7 @@
 #include "Perception/AISenseConfig_Sight.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Bool.h"
 #include "BehaviorTree/Blackboard/BlackboardKeyType_Object.h"
+#include "BehaviorTree/Blackboard/BlackboardKeyType_Vector.h"
 
 
 AWolfAiController::AWolfAiController() 
@@ -129,6 +130,7 @@ void AWolfAiController::OnPawnDetected(const TArray<AActor*>& DetectedPawns)
 					DistanceToPlayer = GetPawn()->GetDistanceTo(Detected);
 					BBC->SetValue<UBlackboardKeyType_Bool>("bHasLineOfSight", true);
 					BBC->SetValue<UBlackboardKeyType_Object>("Enemy", Detected);
+					BBC->SetValueAsVector("LastEnemyLocation", Detected->GetActorLocation());
 				}
 			}
 
