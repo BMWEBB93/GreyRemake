@@ -180,3 +180,9 @@ void AWolfAiController::SetupPackData()
 		BBC->SetValueAsInt("HierarchyRank", MyWolf->HierarchyRank);
 	}
 }
+
+void AWolfAiController::SetWolfState(EPackState state)
+{
+	WolfState = state;
+	BBC->SetValueAsEnum("WolfState", (uint8)WolfState);
+}

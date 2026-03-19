@@ -1,22 +1,21 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "BTDecorator_GetPackState.h"
-#include "AIController.h"
-#include "BehaviorTree/BlackboardComponent.h"
+#include "BTDecorator_GetPackAttackState.h"
+
+#include "PackAttack.h"
 #include "Wolf.h"
-#include "WolfPack.h"
+#include "WolfAiController.h"
 
-UBTDecorator_GetPackState::UBTDecorator_GetPackState()
+UBTDecorator_GetPackAttackState::UBTDecorator_GetPackAttackState()
 {
-
-	NodeName = "GetPackState";
+	NodeName = "GetPackAttackState";
 	bCreateNodeInstance = true;
 }
 
-bool UBTDecorator_GetPackState::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
+bool UBTDecorator_GetPackAttackState::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const
 {
-   
+
 
     // Get AI Controller
     AAIController* WolfController = OwnerComp.GetAIOwner();
@@ -30,12 +29,12 @@ bool UBTDecorator_GetPackState::CalculateRawConditionValue(UBehaviorTreeComponen
     if (!Wolf || !Wolf->Pack)
     {
         return false;
-    } 
+    }
 
 
 
-    
+
 
     // Compare with the actual pack state
-    return Wolf->Pack->CurrentPackState == DesiredPackState;
+    return Wolf->Pack->CurrentPackAttack == DesiredState;
 }

@@ -215,3 +215,22 @@ void AWolfPack::SetPackState(EPackState NewState)
 	}
 }
 
+void AWolfPack::SetPackAttackState(EPackAttack NewState)
+{
+	CurrentPackAttack = NewState;
+
+	for (AWolf* Wolf : PackMembers)
+	{
+		if (!Wolf) continue;
+
+		AAIController* Controller = Cast<AAIController>(Wolf->GetController());
+		if (!Controller) continue;
+
+		UBlackboardComponent* BB = Controller->GetBlackboardComponent();
+		if (!BB) continue;
+
+		BB->SetValueAsEnum("PackAttackState", (uint8)NewState);
+
+	}
+}
+

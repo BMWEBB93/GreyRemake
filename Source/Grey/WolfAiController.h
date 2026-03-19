@@ -9,6 +9,8 @@
 #include "Perception/AISenseConfig_Sight.h"
 #include "Perception/AISenseConfig_Hearing.h"
 
+#include "PackState.h"
+
 #include "WolfAiController.generated.h"
 
 /**
@@ -35,6 +37,8 @@ public:
 	const FName BlackboardEnemyKey = FName("Enemy");
 
 	void SetupPackData();
+	void SetWolfState(EPackState state);
+
 
 	//
 	// AI perception variables
@@ -84,6 +88,8 @@ public:
 	UPROPERTY (EditAnywhere, BlueprintReadWrite)
 	FVector LastEnemyPosition;
 
+	UPROPERTY (EditAnywhere, BlueprintReadWrite)
+	EPackState WolfState;
 
 protected:
 

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PackState.h"
+#include "PackAttack.h"
 #include "WolfPack.generated.h"
 
 
@@ -31,6 +32,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pack")
 	EPackState CurrentPackState;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pack")
+	EPackAttack CurrentPackAttack;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	class APatrolPath* CurrentPatrolPath;
 
@@ -53,6 +57,8 @@ public:
 
 	virtual void UpdateHierarchy();
 	virtual void SetPackState(EPackState NewState);
+	void SetPackAttackState(EPackAttack NewState);
+
 
 	AWolf* GetPatrolFollowTarget(AWolf* SelfWolf);
 
