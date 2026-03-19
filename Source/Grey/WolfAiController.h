@@ -57,7 +57,7 @@ public:
 	float AILoseSightRadius = AiSightRadius + 50.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	float AIFieldOfView = 50.f;	
+	float AIFieldOfView = 360.f;	
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	float DistanceToPlayer = 0.0f;
