@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "AnimNotify_SetCanAttackTrue.h"
+
 #include "BaseCharacter.h"
 
-#include "AnimNotify_SetCanAttackTrue.h"
 
 void UAnimNotify_SetCanAttackTrue::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {

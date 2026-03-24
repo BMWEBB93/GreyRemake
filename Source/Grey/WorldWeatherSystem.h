@@ -3,6 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Engine/DirectionalLight.h"
+
+#include "Components/ExponentialHeightFogComponent.h"
+#include "Components/DirectionalLightComponent.h"
+
 #include "Subsystems/WorldSubsystem.h"
 #include "WorldWeatherSystem.generated.h"
 
@@ -17,6 +22,9 @@ class GREY_API UWorldWeatherSystem : public UTickableWorldSubsystem
 public: 
 
 	virtual void Tick(float DeltaTime) override;
+	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
+
+	void FindDaySequence();
 
 	virtual TStatId GetStatId() const override;
 
@@ -24,4 +32,13 @@ public:
 	{
 		return true;
 	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UDirectionalLightComponent* Sun;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UExponentialHeightFogComponent* Fog;
+
+	float MaxFogDensity = .8f;
+
 };
