@@ -43,4 +43,6 @@ public:
     UFUNCTION(BlueprintCallable)
     virtual void UseItem() override;
     virtual void BeginPlay() override;
+
+    virtual void Uequip();
 };

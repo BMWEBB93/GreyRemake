@@ -4,17 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimNotifies/AnimNotify.h"
-#include "AnimNotify_SetCanAttackTrue.generated.h"
+#include "AnimNotify_SetIsAttacking.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class GREY_API UAnimNotify_SetCanAttackTrue : public UAnimNotify
+class GREY_API UAnimNotify_SetIsAttacking : public UAnimNotify
 {
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "New IsAttacking State")
+	bool state = false;
 
 	virtual void Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation) override;
 

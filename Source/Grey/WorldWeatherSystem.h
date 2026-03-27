@@ -39,6 +39,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UExponentialHeightFogComponent* Fog;
 
-	float MaxFogDensity = .8f;
+	float MaxFogDensity = .6f;
 
 };

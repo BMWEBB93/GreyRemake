@@ -4,6 +4,10 @@
 #include "PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Blueprint/UserWidget.h"
+#include "PlayerItem.h"
+#include "BuildableObjects.h"
+#include "Lighter.h"
+#include "CampFire.h"
 
 
 // Sets default values
@@ -169,6 +173,8 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
     if (LookedAtItem != NULL && HeldItems.Num() < 11) // if looking at a valid item and have space in the inventory
     {
         LookedAtItem->DisableCollision();
+        LookedAtItem->Player = this;
+
         HeldItems.Add(LookedAtItem);
         LookedAtItem->SetOwner(this);
 
@@ -181,30 +187,28 @@ void APlayerCharacter::Interact(const FInputActionValue& Value)
         if (LookedAtItem->bRightHand) // item is a right handed item
         {
             if (RightEquippedItem != NULL)
-                RightEquippedItem->Uequip();
-
-            LookedAtItem->Equip();
-            RightEquippedItem = LookedAtItem;
+                RightEquippedItem->Uequip();            
 
             LookedAtItem->AttachToComponent(
                 GetMesh(),
                 FAttachmentTransformRules::SnapToTargetNotIncludingScale,
                 FName("RightHandSocket"));
 
-            
+             LookedAtItem->Equip();
+             RightEquippedItem = LookedAtItem;
         }
         else // item is a left handed item
         {
             if (LeftEquippedItem != NULL)
-                LeftEquippedItem->Uequip();
-
-            LookedAtItem->Equip();
-            LeftEquippedItem = LookedAtItem;
+                LeftEquippedItem->Uequip();           
 
             LookedAtItem->AttachToComponent(
                 GetMesh(),
                 FAttachmentTransformRules::SnapToTargetNotIncludingScale,
                 FName("LeftHandSocket"));
+
+            LookedAtItem->Equip();
+            LeftEquippedItem = LookedAtItem;
         }
     }
     
@@ -232,13 +236,17 @@ void APlayerCharacter::Item0(const FInputActionValue& Value)
     {
         if (HeldItems[0]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if(RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[0];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[0];
             LeftEquippedItem->Equip();
         }
@@ -251,13 +259,17 @@ void APlayerCharacter::Item1(const FInputActionValue& Value)
     {
         if (HeldItems[1]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[1];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[1];
             LeftEquippedItem->Equip();
         }
@@ -270,13 +282,17 @@ void APlayerCharacter::Item2(const FInputActionValue& Value)
     {
         if (HeldItems[2]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[2];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[2];
             LeftEquippedItem->Equip();
         }
@@ -287,15 +303,19 @@ void APlayerCharacter::Item3(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 3)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[3]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[3];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[3];
             LeftEquippedItem->Equip();
         }
@@ -306,15 +326,19 @@ void APlayerCharacter::Item4(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 4)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[4]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[4];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[4];
             LeftEquippedItem->Equip();
         }
@@ -325,15 +349,19 @@ void APlayerCharacter::Item5(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 5)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[5]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[5];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[5];
             LeftEquippedItem->Equip();
         }
@@ -344,15 +372,19 @@ void APlayerCharacter::Item6(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 6)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[6]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[6];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[6];
             LeftEquippedItem->Equip();
         }
@@ -363,15 +395,19 @@ void APlayerCharacter::Item7(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 7)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[7]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[7];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[7];
             LeftEquippedItem->Equip();
         }
@@ -382,15 +418,19 @@ void APlayerCharacter::Item8(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 8)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[8]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[8];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[8];
             LeftEquippedItem->Equip();
         }
@@ -401,15 +441,19 @@ void APlayerCharacter::Item9(const FInputActionValue& Value)
 {
     if (HeldItems.Num() > 9)
     {
-        if (HeldItems[0]->bRightHand)
+        if (HeldItems[9]->bRightHand)
         {
-            RightEquippedItem->Uequip();
+            if (RightEquippedItem)
+                RightEquippedItem->Uequip();
+
             RightEquippedItem = HeldItems[9];
             RightEquippedItem->Equip();
         }
         else // is a left handed item
         {
-            LeftEquippedItem->Uequip();
+            if (LeftEquippedItem)
+                LeftEquippedItem->Uequip();
+
             LeftEquippedItem = HeldItems[9];
             LeftEquippedItem->Equip();
         }
@@ -441,36 +485,100 @@ void APlayerCharacter::CheckLookAtItem()
         Params
     );
 
-    if (bHit) // if ray hit
+    
+    bCanLightFire = false;
+
+    if (bHit && Hud) // if ray hit and HUD exists
     {
+        
+
         if (APlayerItem* Item = Cast<APlayerItem>(Hit.GetActor())) // cast to item base class
         {
-
             LookedAtItem = Item;
 
-            if (Hud)
+            Hud->SetItemPreviewText(LookedAtItem->ItemName);                 
+        }
+        else if (ABuildableObjects* Object = Cast<ABuildableObjects>(Hit.GetActor())) // Cast to buildable objects
+        {
+            LookedAtObject = Object;
+            LookedAtItem = NULL;
+
+            ALighter* Lighter = Cast<ALighter>(LeftEquippedItem);
+            ACampFire* Campfire = Cast<ACampFire>(Object);
+            if (Campfire)
             {
-                Hud->SetItemPreviewText(LookedAtItem->ItemName);
+                FireToLight = Campfire;
+            }
+            else
+            {
+                FireToLight = NULL;
             }
 
-            
-
-        }
-        else
-        {
-            if (Hud)
+            if (Lighter && Campfire && Lighter->bIsLit)
+            {
+                Hud->SetItemPreviewText(FText::FromString("Start Fire"));
+                bCanLightFire = true;
+            }      
+            else
             {
                 Hud->SetItemPreviewText(FText::GetEmpty());
             }
-            LookedAtItem = NULL;
         }
+        else
+        {
+            Hud->SetItemPreviewText(FText::GetEmpty());
+
+            LookedAtItem = NULL;
+            LookedAtObject = NULL;
+        }
+    }
+    else
+    {
+        if (Hud)
+        {
+            Hud->SetItemPreviewText(FText::GetEmpty());
+        }
+        LookedAtItem = NULL;
+        LookedAtObject = NULL;
+
     }
     
 }
 
 void APlayerCharacter::UpdateInventory()
 {
-    
+    if (!Hud) return;
+
+    if (HeldItems.Num() > 0)
+    {
+        for (int32 i = 0; i < HeldItems.Num(); i++)
+        {
+            Hud->SetSlotIcon(i, HeldItems[i]->ItemImage);
+
+        }
+
+    }
+    for (int32 i = 0; i < 10 - HeldItems.Num(); i++)
+    {
+        Hud->SetSlotIcon(i + HeldItems.Num(), nullptr);             
+    }
+}
+
+void APlayerCharacter::RemoveItem(APlayerItem* Item)
+{
+    Item->Uequip();
+    HeldItems.Remove(Item);
+
+    if (RightEquippedItem == Item)
+    {
+        RightEquippedItem = nullptr;
+    }
+    if (LeftEquippedItem == Item)
+    {
+        LeftEquippedItem = nullptr;
+    }
+
+    UpdateInventory();
 }
 
 

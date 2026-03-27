@@ -55,6 +55,10 @@ protected:
 	class UTextBlock* ItemPreview;
 
 public:
+
+	UPROPERTY(EditAnywhere)
+	UTexture2D* DefaultImage;
+
 	void SetSlotIcon(int32 Index, UTexture2D* Icon);
 	UFUNCTION(BlueprintCallable)
 	void SetItemPreviewText(FText Text);

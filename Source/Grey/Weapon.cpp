@@ -3,6 +3,8 @@
 
 #include "Weapon.h"
 #include "Components/BoxComponent.h"
+#include "BaseCharacter.h"
+#include "PlayerCharacter.h"
 
 
 AWeapon::AWeapon()
@@ -28,5 +30,25 @@ void AWeapon::Attack()
 
 void AWeapon::OnHitBoxOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	if (Player->GetIsAttacking())
+	{
+		ABaseCharacter* HitChar = Cast<ABaseCharacter>(OtherActor);
 
+		if (HitChar != Player)
+		{
+			HitChar->TakeDamage(Damage);
+
+		}
+
+		if (OtherComp)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Hit component: %s"), *OtherComp->GetName());
+
+			if (OtherComp->ComponentHasTag("Tree"))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Hit a tree foliage!"));
+			}
+		}
+	
+	}
 }

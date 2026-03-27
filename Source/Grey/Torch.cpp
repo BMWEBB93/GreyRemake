@@ -31,6 +31,13 @@ void ATorch::BeginPlay()
         
 }
 
+void ATorch::Uequip()
+{
+    Super::Uequip();
+
+    ATorch::TurnOff();
+}
+
 
 void ATorch::ToggleTorch()
 {

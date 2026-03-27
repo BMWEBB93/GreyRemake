@@ -8,6 +8,7 @@
 #include "AnimationType.h"
 #include "PlayerItem.generated.h"
 
+class APlayerCharacter;
 UCLASS()
 class GREY_API APlayerItem : public AActor
 {
@@ -17,16 +18,16 @@ public:
 	// Sets default values for this actor's properties
 	APlayerItem();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* ItemMesh;
 
 	UPROPERTY(BlueprintReadWrite)
 	EItemType Type;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	EAnimationType AnimationType;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FText ItemName;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -37,6 +38,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsEquipped = false;
+
+	
+	APlayerCharacter* Player;
 
 protected:
 	// Called when the game starts or when spawned

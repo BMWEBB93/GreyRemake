@@ -11,7 +11,7 @@ APlayerItem::APlayerItem()
 
 	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>("Mesh");
 
-	RootComponent = ItemMesh;
+	//RootComponent = ItemMesh;
 
 	ItemMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics); // Turn on collision
 	ItemMesh->SetSimulatePhysics(true);    // Turn on physics
@@ -55,6 +55,8 @@ void APlayerItem::EnableCollision()
 
 void APlayerItem::Uequip()
 {
+	
+
 	ItemMesh->SetVisibility(false);           // Hide mesh
 	bIsEquipped = false;
 }

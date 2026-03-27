@@ -46,12 +46,34 @@ void ABaseCharacter::TakeDamage(float DamageAmount)
 {
 	CurrentHealth -= DamageAmount;
 	if (CurrentHealth <= 0) CurrentHealth = 0; bIsDead = true;
+
+
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,                        // Key: -1 = always add new message
+			5.f,                       // Time to display in seconds
+			FColor::Red,               // Color of the text
+			TEXT("Damaged!")      // Message
+		);
+	}
+
 }
 
 void ABaseCharacter::Heal(float HealAmount)
 {
 	CurrentHealth += HealAmount;
 	if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
+}
+
+void ABaseCharacter::SetIsAttacking(bool state)
+{
+	bIsAttacking = state;
+}
+
+bool ABaseCharacter::GetIsAttacking()
+{
+	return bIsAttacking;
 }
 
 

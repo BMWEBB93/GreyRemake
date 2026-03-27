@@ -44,8 +44,9 @@ protected:
 	bool bIsInAir = false;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Animation")
-	bool bShouldHit = false;
+	bool bIsAttacking = false;
 
+	
 
 	// Sounds
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
@@ -75,6 +76,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Heal(float HealAmount);
+
+	UFUNCTION(BlueprintCallable)
+	virtual void SetIsAttacking(bool state);
+
+	UFUNCTION(BlueprintCallable)
+	virtual bool GetIsAttacking();
 
 	// Play Audio
 	void PlayFootstepAtLocation(float Volume);

@@ -8,7 +8,7 @@ public class Grey : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "AIModule", "GameplayTasks", "UMG", "NavigationSystem", "DaySequence" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput" , "AIModule", "GameplayTasks", "UMG", "NavigationSystem", "DaySequence", "Niagara" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

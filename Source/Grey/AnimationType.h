@@ -9,5 +9,8 @@ enum class EAnimationType : uint8
 {
     Torch        UMETA(DisplayName = "Torch"),
     Axe  UMETA(DisplayName = "Axe"),
+    Bag  UMETA(DisplayName = "Bag"),
+    Radio  UMETA(DisplayName = "Radio"),
+
 
 };

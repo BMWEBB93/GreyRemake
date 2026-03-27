@@ -20,6 +20,8 @@
 #include "Components/InputComponent.h"
 
 #include "PlayerItem.h"
+#include "BuildableObjects.h"
+#include "CampFire.h"
 #include "HudWidget.h"
 
 #include "PlayerCharacter.generated.h"
@@ -35,6 +37,14 @@ class GREY_API APlayerCharacter : public ABaseCharacter
 public:
 	// Sets default values for this character's properties
 	APlayerCharacter();
+
+    // Follow camera
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+    class UCameraComponent* FollowCamera;
+
+    UPROPERTY()
+    ACampFire* FireToLight = NULL;
+    bool bCanLightFire = false;
 
 protected:
 	// Called when the game starts or when spawned
@@ -115,15 +125,16 @@ protected:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
     APlayerItem* LookedAtItem;
 
+    UPROPERTY (BlueprintReadWrite, Category = "Inventory")
+    ABuildableObjects* LookedAtObject;
 
+    
 
     // Camera boom (spring arm)
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
     class USpringArmComponent* CameraBoom;
 
-    // Follow camera
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
-    class UCameraComponent* FollowCamera;
+   
         
     // Widget
     UPROPERTY (EditAnywhere, Category = "UI")
@@ -163,7 +174,7 @@ public:
     void CheckLookAtItem();
     void UpdateInventory();
 
-
+    void RemoveItem(APlayerItem* Item);
 
 
 };
