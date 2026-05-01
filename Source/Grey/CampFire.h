@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UNiagaraSystem* Fire;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bShouldStartLit = false;
+
 	UPROPERTY()
 	UNiagaraComponent* FireComponent;
 
@@ -41,11 +44,10 @@ public:
 
 	float Volume = 0.2f;
 	float Pitch = 1.f;
-
 	bool bIsLit = false;
 
 	virtual void Tick(float DeltaTime);
-
+	virtual void BeginPlay();
 	void HandlePlayerPlacement();
 
 	void StartFire();

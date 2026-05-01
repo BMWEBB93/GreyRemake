@@ -41,6 +41,15 @@ void ACampFire::Tick(float DeltaTime)
 	}
 }
 
+void ACampFire::BeginPlay()
+{
+	if (bShouldStartLit)
+	{
+		StartFire();
+	}
+}
+
+
 void ACampFire::HandlePlayerPlacement()
 {
 	// Move the tent preview to the camera look direction
